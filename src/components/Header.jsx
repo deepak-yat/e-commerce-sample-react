@@ -1,8 +1,9 @@
 import Navbar from "./Navbar";
 
-function Header() {
+function Header({ cart }) {
   return (
     <header className="header">
+
       <div className="header-container">
 
         <div className="logo">
@@ -10,9 +11,10 @@ function Header() {
           <span>ShopZone</span>
         </div>
 
-        <Navbar />
+        <Navbar cart={cart} />
 
       </div>
+
     </header>
   );
 }

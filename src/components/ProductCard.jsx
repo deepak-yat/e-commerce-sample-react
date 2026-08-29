@@ -1,4 +1,40 @@
-function ProductCard({ product }) {
+function ProductCard({ product, cart, setCart }) {
+
+  function addToCart() {
+
+    const existingProduct = cart.find(
+      (item) => item.id === product.id
+    );
+
+    if (existingProduct) {
+
+      setCart(
+        cart.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                quantity: item.quantity + 1
+              }
+            : item
+        )
+      );
+
+    } else {
+
+      setCart([
+        ...cart,
+        {
+          ...product,
+          quantity: 1
+        }
+      ]);
+
+    }
+
+    console.log("Cart:", cart);
+  }
+
+
   return (
     <div className="product-card">
 
@@ -13,7 +49,9 @@ function ProductCard({ product }) {
           {product.category}
         </p>
 
-        <h3>{product.name}</h3>
+        <h3>
+          {product.name}
+        </h3>
 
         <p className="rating">
           ⭐ {product.rating}
@@ -25,13 +63,18 @@ function ProductCard({ product }) {
         </p>
 
         <div className="product-actions">
+
           <button className="details-button">
             View Details
           </button>
 
-          <button className="cart-button">
+          <button
+            className="cart-button"
+            onClick={addToCart}
+          >
             Add to Cart
           </button>
+
         </div>
 
       </div>

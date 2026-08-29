@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-
+import Checkout from "./components/checkout";
 import Header from "./components/Header";
 import ProductList from "./components/productList";
 import Auth from "./components/Auth";
+import Cart from "./components/Cart";
 
 
-function Home() {
+function Home({ cart, setCart }) {
   return (
     <main className="main-content">
 
@@ -21,14 +23,16 @@ function Home() {
 
       </section>
 
-
       <section className="products-section">
 
         <h2 className="section-title">
           Featured Products
         </h2>
 
-        <ProductList />
+        <ProductList
+          cart={cart}
+          setCart={setCart}
+        />
 
       </section>
 
@@ -38,16 +42,25 @@ function Home() {
 
 
 function App() {
+
+  // Our shared cart state
+  const [cart, setCart] = useState([]);
+
   return (
     <div>
 
-      <Header />
+      <Header cart={cart} />
 
       <Routes>
 
         <Route
           path="/"
-          element={<Home />}
+          element={
+            <Home
+              cart={cart}
+              setCart={setCart}
+            />
+          }
         />
 
         <Route
@@ -55,11 +68,27 @@ function App() {
           element={<Auth />}
         />
 
+        <Route
+          path="/cart"
+          element={
+            <Cart
+              cart={cart}
+              setCart={setCart}
+            />
+          }
+        />
+
+        <Route
+          path="/checkout"
+          element={
+            <Checkout cart={cart} />
+          }
+        />  
+        
       </Routes>
 
     </div>
   );
 }
-
 
 export default App;

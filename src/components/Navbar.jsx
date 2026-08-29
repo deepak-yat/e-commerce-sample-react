@@ -1,39 +1,78 @@
 import { Link } from "react-router-dom";
-function Navbar() {
+
+function Navbar({ cart }) {
+
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   return (
     <nav className="navbar">
 
       <div className="nav-links">
-        <a href="/">Home</a>
-        <a href="/">Products</a>
-        <a href="/">Categories</a>
+
+        <Link to="/">
+          Home
+        </Link>
+
+        <Link to="/">
+          Products
+        </Link>
+
+        <Link to="/">
+          Categories
+        </Link>
+
       </div>
 
+
       <div className="search-container">
-        <span className="search-icon">⌕</span>
+
+        <span className="search-icon">
+          ⌕
+        </span>
 
         <input
           type="text"
           placeholder="Search products..."
         />
+
       </div>
+
 
       <div className="nav-actions">
 
-        <a href="/" className="nav-action">
+        <Link
+          to="/"
+          className="nav-action"
+        >
           <span>👤</span>
           <span>Profile</span>
-        </a>
+        </Link>
 
-        <a href="/login" className="nav-action">
+
+        <Link
+          to="/login"
+          className="nav-action"
+        >
           <span>Login</span>
-        </a>
+        </Link>
 
-        <a href="/" className="cart-link">
+
+        <Link
+          to="/cart"
+          className="cart-link"
+        >
           <span>🛒</span>
+
           <span>Cart</span>
-          <span className="cart-count">0</span>
-        </a>
+
+          <span className="cart-count">
+            {cartCount}
+          </span>
+
+        </Link>
 
       </div>
 
