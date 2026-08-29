@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function ProductCard({ product, cart, setCart }) {
 
   function addToCart() {
@@ -64,9 +65,12 @@ function ProductCard({ product, cart, setCart }) {
 
         <div className="product-actions">
 
-          <button className="details-button">
-            View Details
-          </button>
+          <Link
+  to={`/product/${product.id}`}
+  className="details-button"
+>
+  View Details
+</Link>
 
           <button
             className="cart-button"

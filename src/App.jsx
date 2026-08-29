@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Checkout from "./components/checkout";
+
 import Header from "./components/Header";
 import ProductList from "./components/productList";
 import Auth from "./components/Auth";
 import Cart from "./components/Cart";
-
+import Checkout from "./components/Checkout";
+import OrderSuccess from "./components/OrderSuccess";
+import ProductDetails from "./components/ProductDetails";
 
 function Home({ cart, setCart }) {
   return (
@@ -22,6 +24,7 @@ function Home({ cart, setCart }) {
         </p>
 
       </section>
+
 
       <section className="products-section">
 
@@ -43,7 +46,6 @@ function Home({ cart, setCart }) {
 
 function App() {
 
-  // Our shared cart state
   const [cart, setCart] = useState([]);
 
   return (
@@ -83,12 +85,21 @@ function App() {
           element={
             <Checkout cart={cart} />
           }
-        />  
-        
+        />
+
+        <Route
+          path="/order-success"
+          element={<OrderSuccess />}
+        />
+  <Route
+  path="/product/:id"
+  element={<ProductDetails />}
+/>
       </Routes>
 
     </div>
   );
 }
+
 
 export default App;

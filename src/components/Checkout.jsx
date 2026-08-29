@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Checkout({ cart }) {
+
+  const navigate = useNavigate();
 
   const [paymentMethod, setPaymentMethod] = useState("");
 
@@ -11,6 +14,10 @@ function Checkout({ cart }) {
     city: "",
     pincode: ""
   });
+
+  const [showPayment, setShowPayment] = useState(false);
+
+  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
 
 
   const total = cart.reduce(
@@ -36,9 +43,27 @@ function Checkout({ cart }) {
 
     event.preventDefault();
 
+    setShowPayment(true);
+
+    setPaymentConfirmed(false);
+
     console.log("Address:", address);
     console.log("Payment:", paymentMethod);
     console.log("Cart:", cart);
+
+  }
+
+
+  function handlePayment() {
+
+    navigate("/order-success", {
+      state: {
+        cart: cart,
+        address: address,
+        paymentMethod: paymentMethod,
+        total: total
+      }
+    });
 
   }
 
@@ -524,6 +549,111 @@ function Checkout({ cart }) {
         </section>
 
       </form>
+
+
+      {/* PAYMENT POPUP */}
+
+      {showPayment && (
+
+        <div className="payment-modal-overlay">
+
+          <div className="payment-modal">
+
+            <button
+              type="button"
+              className="payment-close"
+              onClick={() => setShowPayment(false)}
+            >
+              ×
+            </button>
+
+
+            <h2>
+              Confirm Payment
+            </h2>
+
+
+            <p>
+              You are about to place your ShopZone order.
+            </p>
+
+
+            <div className="payment-amount">
+
+              <span>
+                Amount to Pay
+              </span>
+
+              <strong>
+                ₹{total.toLocaleString("en-IN")}
+              </strong>
+
+            </div>
+
+
+            <div className="selected-payment">
+
+              <span>
+                Payment Method
+              </span>
+
+              <strong>
+
+                {paymentMethod === "upi" && "UPI"}
+
+                {paymentMethod === "card" &&
+                  "Credit / Debit Card"}
+
+                {paymentMethod === "netbanking" &&
+                  "Net Banking"}
+
+                {paymentMethod === "cod" &&
+                  "Cash on Delivery"}
+
+              </strong>
+
+            </div>
+
+
+            <div className="payment-toggle-row">
+
+              <span>
+                Confirm Payment
+              </span>
+
+              <label className="toggle">
+
+                <input
+                  type="checkbox"
+                  checked={paymentConfirmed}
+                  onChange={(event) =>
+                    setPaymentConfirmed(
+                      event.target.checked
+                    )
+                  }
+                />
+
+                <span className="toggle-slider"></span>
+
+              </label>
+
+            </div>
+
+
+            <button
+              type="button"
+              className="confirm-payment-button"
+              disabled={!paymentConfirmed}
+              onClick={handlePayment}
+            >
+              Proceed with Payment
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
 
     </main>
   );

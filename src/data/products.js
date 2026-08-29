@@ -5,7 +5,7 @@ const products = [
   // =========================
   {
     id: 1,
-    name: "iPhone 16",
+    name: "iPhone16",
     description: "Premium smartphone with advanced performance and camera features.",
     price: 69999,
     category: "Phones",
